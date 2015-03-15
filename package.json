@@ -1,0 +1,16 @@
+{
+  "name": "rtc-stream",
+  "description": "Webrtc P2P through regular NodeJS stream",
+  "version": "1.0.0",
+  "main": "./index.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vmolsa/rtc-stream"
+  },
+  "author": "vmolsa <ville.molsa@gmail.com> (http://github.com/vmolsa)",
+  "dependencies": {
+    "underscore": "^1.8.2",
+    "wrtc": "^0.0.49"
+  }
+}

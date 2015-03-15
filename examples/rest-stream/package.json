@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "rest-stream": "^1.0.8"
+  }
+}

@@ -1,0 +1,93 @@
+<html>
+<head>
+  <script src="/rtc-stream.min.js"></script>
+</head>
+<body>
+  <video autoplay></video> 
+  <script>
+    var alice = new rtcStream();
+    var bob = new rtcStream(alice);
+
+    alice.addStun('stun.l.google.com:19302');
+    bob.addStun('stun.l.google.com:19302');
+
+    alice.on('end', function() {
+      console.log('alice: peer closed :(');
+    });
+
+    alice.on('error', function(error) {
+      console.log('alice: error:', error.toString());
+    });
+
+    alice.on('open', function() {
+      console.log('alice: Connected :)');
+    });
+
+    bob.on('end', function() {
+      console.log('bob: peer closed :(');
+    });
+
+    bob.on('error', function(error) {
+      console.log('bob: error:', error.toString());
+    });
+
+    bob.on('open', function() {
+      console.log('bob: Connected :)');
+    });
+
+    bob.on('media', function(media) {
+      media.on('end', function() {
+        console.log('bob: media: closed!');
+      });
+      
+      media.on('error', function(error) {
+        console.log('bob: media: error:', error.toString());
+      });
+      
+      media.on('open', function() {
+        console.log('bob: media: Connected :)');
+      });
+      
+      media.on('stream', function(stream) {
+        console.log('bob: got stream');
+        
+        var video = document.querySelector('video');
+        video.src = window.URL.createObjectURL(stream);
+        
+        video.onloadedmetadata = function(event) {
+          console.log('Video loaded...');
+        };
+      });
+      
+      console.log('bob: got media! :)');
+    });
+
+    alice.createMedia(function(media) {
+      if (media) {
+        media.on('end', function() {
+          console.log('alice: media: closed!');
+        });
+
+        media.on('error', function(error) {
+          console.log('alice: media: error:', error.toString());
+        });
+
+        media.on('open', function() {
+          console.log('alice: media: Connected :)');
+        });
+        
+        media.createStream(function(stream) {
+          if (stream) {
+            media.addStream(stream);
+            console.log('alice: got stream');
+          } else {
+            console.log('alice: NO STREAM');
+          }
+        });
+        
+        console.log('alice: got media! :)');
+      }
+    }, 5000);
+  </script>
+</body>
+</html>
