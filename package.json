@@ -11,6 +11,6 @@
   "author": "vmolsa <ville.molsa@gmail.com> (http://github.com/vmolsa)",
   "dependencies": {
     "underscore": "^1.8.2",
-    "wrtc": "^0.0.49"
+    "wrtc": "0.0.65"
   }
 }
